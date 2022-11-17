@@ -51,7 +51,14 @@ Take a look at the documentation of the  [PHP library](https://github.com/open-t
 
 ### 2.2. Install the Bundle
 
-1. Add
+For now the bundle is only installable as part of the OpenTelemetry [opentelemetry-php-contrib](https://github.com/open-telemetry/opentelemetry-php-contrib)
+package.
+
+The recommended way to install the library is through [Composer](http://getcomposer.org):
+
+1.  Install the composer package using [Composer's installation instructions](https://getcomposer.org/doc/00-intromd#installation-linux-unix-macos).
+
+2.  Add
 ```bash
     "minimum-stability": "dev",
     "prefer-stable": true,
@@ -59,10 +66,10 @@ Take a look at the documentation of the  [PHP library](https://github.com/open-t
 
 To your project's `composer.json` file, as this utility has not reached a stable release status yet.
 
-2. Install the package with composer:
+3.  Install the package with composer:
 
 ```bash
-$ composer require open-telemetry/contrib-sdk-bundle
+$ composer require open-telemetry/opentelemetry-php-contrib
 ```
 
 
@@ -201,9 +208,9 @@ namespace App\EventSubscriber;
 use OpenTelemetry\API\Trace\SpanInterface;
 use OpenTelemetry\SDK\Trace\Tracer;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
+use Symfony\Component\HttpKernel\KernelEvents;
 use Symfony\Component\HttpKernel\Event\RequestEvent;
 use Symfony\Component\HttpKernel\Event\TerminateEvent;
-use Symfony\Component\HttpKernel\KernelEvents;
 
 class TracingKernelSubscriber implements EventSubscriberInterface
 {
@@ -233,11 +240,11 @@ class TracingKernelSubscriber implements EventSubscriberInterface
     public static function getSubscribedEvents(): array
     {
         // return the subscribed events, their methods and priorities
-        // use a very high integer for the Request priority and a
+        // use a very high integer for the Request priority and a 
         // very low negative integer for the Terminate priority, so the listener
         // will be the first and last one to be called respectively.
         return [
-            KernelEvents::REQUEST => [['onRequestEvent', 10000]],
+            KernelEvents::TERMINATE => [['onRequestEvent', 10000]],
             KernelEvents::TERMINATE => [['onTerminateEvent', -10000]],
         ];
     }

@@ -14,8 +14,7 @@
     "prefer-stable": true,
     "require": {
         "php": "^7.4 || ^8.0",
-        "open-telemetry/sdk-contrib": "self.version",
-        "open-telemetry/sdk": "self.version",
+        "open-telemetry/opentelemetry": "^0.0.10",
         "php-http/message": "^1.12",
         "php-http/discovery": "^1.14",
         "symfony/config": "^4.4|^5.3|^6.0",
